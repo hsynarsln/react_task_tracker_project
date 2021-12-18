@@ -4,9 +4,16 @@ import './App.css';
 import AddTask from './components/AddTask';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
+import UpdateTask from './components/UpdateTask';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+
+  //* EDIT
+  const [text, setText] = useState('');
+  const [day, setDay] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState('');
 
   //? butona bastığımızda formun toggle olması
   const [showAddTask, setShowAddTask] = useState(false);
@@ -50,6 +57,7 @@ function App() {
   const addTask = async newTask => {
     await axios.post(baseUrl, newTask);
     fetchTasks();
+    setShowAddTask(false);
   };
 
   //! ADD TASK
@@ -107,7 +115,7 @@ function App() {
     const { data } = await axios.get(`${baseUrl}/${toggleDoneId}`);
     const updatedTask = { ...data, isDone: !data.isDone };
 
-    //?PUt
+    //?Put
     await axios.put(`${baseUrl}/${toggleDoneId}`, updatedTask);
     fetchTasks();
   };
@@ -120,19 +128,43 @@ function App() {
   //! SHOW ADD TASK
   const toggleShow = () => {
     setShowAddTask(!showAddTask);
+    if (isEditing === true) {
+      setIsEditing(false);
+    }
   };
 
-  //!DELETE ALL TASKS
+  //!GET TASK WITH ID
+  const getTaskWithId = async editTaskId => {
+    setEditingId(editTaskId);
+    const { data } = await axios.get(`${baseUrl}/${editTaskId}`);
+    // console.log(data);
+    toggleShow();
+    const { text, day } = data;
+    // console.log(text);
+    // console.log(day);
+    setText(text);
+    setDay(day);
+    setIsEditing(!isEditing);
+  };
+
+  //! EDIT TASK
+  const editTask = async updateTask => {
+    await axios.put(`${baseUrl}/${editingId}`, updateTask);
+    fetchTasks();
+    setIsEditing(false);
+    setShowAddTask(false);
+  };
 
   return (
     <div className='container'>
       <Header title='TASK TRACKER' showAddTask={showAddTask} toggleShow={toggleShow} />
 
-      {showAddTask && <AddTask addTask={addTask} />}
+      {showAddTask && !isEditing && <AddTask addTask={addTask} />}
+      {isEditing && <UpdateTask editText={text} editDay={day} editTask={editTask} />}
 
       {/* //* useState'de tanımladığımız taskları Tasks componenete yolluyoruz. */}
       {/* //? task'ların length'i 0'dan büyük ise Tasks componentini göster küçük ise p tagi */}
-      {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleDone={toggleDone} /> : <p style={{ textAlign: 'center' }}>NO TASK TO SHOW</p>}
+      {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} getTaskWithId={getTaskWithId} toggleDone={toggleDone} /> : <p style={{ textAlign: 'center' }}>NO TASK TO SHOW</p>}
     </div>
   );
 }

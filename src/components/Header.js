@@ -7,9 +7,9 @@ import Button from './Button';
 const Header = ({ title = 'Task Tracker', toggleShow, showAddTask }) => {
   //? Parent componentten herhangi bir props gelmiyor ise aşağıdaki title alır
 
-  const handleClick = () => {
-    console.log('Click with handleClick from header');
-  };
+  // const handleClick = () => {
+  //   console.log('Click with handleClick from header');
+  // };
 
   return (
     <header>
