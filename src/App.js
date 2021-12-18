@@ -1,33 +1,37 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './App.css';
 import AddTask from './components/AddTask';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: 'Study React Pre-Class Notes',
-      day: 'Dec 12th at 2:30pm',
-      isDone: false
-    },
-    {
-      id: 2,
-      text: 'Feed the Dog',
-      day: 'Dec 13th at 1:30pm',
-      isDone: true
-    },
-    {
-      id: 3,
-      text: 'Attend In-Class',
-      day: 'Dec 14th at 3:00pm',
-      isDone: false
-    }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   //? butona bastığımızda formun toggle olması
   const [showAddTask, setShowAddTask] = useState(false);
+
+  //! JSON SERVER
+  const baseUrl = 'http://localhost:5000/tasks';
+
+  //! FETCH TASKS (JSON SERVER)
+  // const fetchTasks = async () => {
+  //   const res = await fetch(baseUrl);
+  //   const data = await res.json();
+  //   console.log(data);
+  // };
+  //! FETCH TASKS WITH AXIOS
+  const fetchTasks = async () => {
+    // const res = await axios(baseUrl);
+    const { data } = await axios(baseUrl);
+    // console.log(data);
+    setTasks(data);
+  };
+
+  //! Uygulama açılır açılmaz verilerimizin gelmesini istiyoruz.
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   //! ADD TASK
   const addTask = newTask => {
