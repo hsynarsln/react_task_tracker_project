@@ -1,10 +1,6 @@
 // import React from 'react'
 
 const Button = ({ color, text, toggleShow }) => {
-  // const handleClick = () => {
-  //   console.log('Click with handleClick');
-  // };
-  //? buttton eventini header.js'de oluşturucaz.(props drilling)
 
   return (
     <div>
