@@ -11,7 +11,7 @@ function App() {
   //? butona bastığımızda formun toggle olması
   const [showAddTask, setShowAddTask] = useState(false);
 
-  //! JSON SERVER
+  //! JSON SERVER URL
   const baseUrl = 'http://localhost:5000/tasks';
 
   //! FETCH TASKS (JSON SERVER)
@@ -33,15 +33,34 @@ function App() {
     fetchTasks();
   }, []);
 
-  //! ADD TASK
-  const addTask = newTask => {
-    // console.log('Add Task From App.js');
-    const id = Math.floor(Math.random() * 100) + 1; //? new Task için id oluşturuyoruz
+  //! ADD TASK (JSON SERVER)
+  // const addTask = async newTask => {
+  //   const res = await fetch(baseUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-type': 'application/json'
+  //     },
+  //     body: JSON.stringify(newTask)
+  //   });
+  //   //* burada fetch yapmamız gerekir. yoksa server'a ekler ama ekrana yansıtmaz
+  //   fetchTasks();
+  // };
 
-    const addNewTask = { id, ...newTask }; //? yeni taskımıza id ekliyoruz
-
-    setTasks([...tasks, addNewTask]);
+  //! ADD TASK WITH AXIOS
+  const addTask = async newTask => {
+    await axios.post(baseUrl, newTask);
+    fetchTasks();
   };
+
+  //! ADD TASK
+  // const addTask = newTask => {
+  //   // console.log('Add Task From App.js');
+  //   const id = Math.floor(Math.random() * 100) + 1; //? new Task için id oluşturuyoruz
+
+  //   const addNewTask = { id, ...newTask }; //? yeni taskımıza id ekliyoruz
+
+  //   setTasks([...tasks, addNewTask]);
+  // };
 
   //! DELETE TASK
   const deleteTask = deletedTaskId => {
