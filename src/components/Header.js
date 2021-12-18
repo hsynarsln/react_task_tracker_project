@@ -16,16 +16,13 @@ const Header = ({ title = 'Task Tracker', toggleShow, showAddTask }) => {
       <h1>{title}</h1>
       {/* <h1>{title}</h1> */}
 
-      <Button color={showAddTask ? 'red' : 'purple'} text={toggleShow ? 'Close Add Task Bar' : 'Show Add Task Bar'} toggleShow={toggleShow} />
+      <Button color={showAddTask ? 'red' : 'purple'} text={showAddTask ? 'Close Add Task Bar' : 'Show Add Task Bar'} toggleShow={toggleShow} />
     </header>
   );
 };
 
-
 Header.defaultProps = {
   title: 'Task Tracker'
 };
-
-
 
 export default Header;

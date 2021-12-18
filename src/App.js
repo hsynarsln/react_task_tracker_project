@@ -62,12 +62,26 @@ function App() {
   //   setTasks([...tasks, addNewTask]);
   // };
 
-  //! DELETE TASK
-  const deleteTask = deletedTaskId => {
-    // console.log('delete', deletedTaskId);
-    //* DELETE YAPMAK İÇİN GENELLİKLE FILTER METODU KULLANIYORUZ
-    setTasks(tasks.filter(task => task.id !== deletedTaskId));
+  //! DELETE TASK FETCH
+  // const deleteTask = async deleteTaskId => {
+  //   await fetch(`${baseUrl}/${deleteTaskId}`, {
+  //     method: 'DELETE'
+  //   });
+  //   fetchTasks();
+  // };
+
+  //! DELETE TASK WITH AXIOS
+  const deleteTask = async deleteTaskId => {
+    await axios.delete(`${baseUrl}/${deleteTaskId}`);
+    fetchTasks();
   };
+
+  //! DELETE TASK
+  // const deleteTask = deletedTaskId => {
+  //   // console.log('delete', deletedTaskId);
+  //   //* DELETE YAPMAK İÇİN GENELLİKLE FILTER METODU KULLANIYORUZ
+  //   setTasks(tasks.filter(task => task.id !== deletedTaskId));
+  // };
 
   //! TOGGLE DONE
   const toggleDone = toggleDoneId => {
