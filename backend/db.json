@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "text": "football match",
+      "day": "Dec 18th at 22:00",
+      "isDone": false,
+      "id": 3
+    },
+    {
+      "text": "dinner",
+      "day": "Dec 31th at 18:00",
+      "isDone": false,
+      "id": 4
+    },
+    {
+      "text": "React redux",
+      "day": "Jan 01th at 12:00",
+      "isDone": false,
+      "id": 5
+    }
+  ]
+}
