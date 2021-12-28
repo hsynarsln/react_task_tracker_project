@@ -19,7 +19,7 @@ function App() {
   const [showAddTask, setShowAddTask] = useState(false);
 
   //! JSON SERVER URL
-  const baseUrl = 'http://localhost:5000/tasks';
+  const baseUrl = 'https://react-task-tracker-backend.herokuapp.com/tasks';
 
   //! FETCH TASKS (JSON SERVER)
   // const fetchTasks = async () => {
